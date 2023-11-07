@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: text-gen-service
+  namespace: default
+spec:
+  selector:
+    app: text-gen
+  ports:
+    - name: "webui"
+      protocol: TCP
+      port: 7860
+      targetPort: 7860
+    - name: "api"
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+    - name: "openai-api"
+      protocol: TCP
+      port: 5001
+      targetPort: 5001
+    - name: "api-stream"
+      protocol: TCP
+      port: 5005
+      targetPort: 5005
