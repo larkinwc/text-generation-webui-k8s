@@ -9,6 +9,7 @@ spec:
   containers:
   - name: text-gen-container
     image: larkinwc/text-generation-webui-k8s:cuda
+    imagePullPolicy: Always
     ports:
     - containerPort: 5000
     - containerPort: 5001
@@ -26,7 +27,7 @@ spec:
       subPath: models
     resources:
       limits:
-        nvidia.com/gpu: 1  # requesting 1 GPU
+        nvidia.com/gpu: 2  # requesting 1 GPU
   tolerations:
   - key: "nvidia.com/gpu"
     operator: "Exists"

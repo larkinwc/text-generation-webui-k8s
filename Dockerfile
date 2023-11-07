@@ -24,8 +24,8 @@ ARG VERSION_TAG
 ENV VERSION_TAG=${VERSION_TAG}
 RUN . /scripts/checkout_src_version.sh
 # To use local source: comment out the git clone command then set the build arg `LCL_SRC_DIR`
-#ARG LCL_SRC_DIR="text-generation-webui"
-#COPY ${LCL_SRC_DIR} /src
+ARG LCL_SRC_DIR="text-generation-webui"
+COPY ${LCL_SRC_DIR} /src
 #################################
 ENV LLAMA_CUBLAS=1
 # Copy source to app
@@ -86,7 +86,9 @@ RUN rm -rf /app/repositories/GPTQ-for-LLaMa && \
     git clone https://github.com/qwopqwop200/GPTQ-for-LLaMa -b cuda /app/repositories/GPTQ-for-LLaMa
 RUN pip3 uninstall -y quant-cuda && \
     sed -i 's/^safetensors==0\.3\.0$/safetensors/g' /app/repositories/GPTQ-for-LLaMa/requirements.txt && \
+    sed -i 's/^accelerate==[0-9]*\.[0-9]*\.[0-9]*/accelerate==0.24.*/' /app/repositories/GPTQ-for-LLaMa/requirements.txt && \
     pip3 install -r /app/repositories/GPTQ-for-LLaMa/requirements.txt
+RUN pip install transformers -U
 ENV EXTRA_LAUNCH_ARGS=""
 CMD ["python3", "/app/server.py"]
 
