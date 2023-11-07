@@ -1,0 +1,4 @@
+Flesh out kubernetes files
+make it so models can be downloaded using a sidecar container
+make container repo
+add container build gh workflows
